@@ -265,7 +265,8 @@ private static void settingsMenu() {
 	       	 DriverManager.registerDriver(driver);
 	       	 con = DriverManager.getConnection(url, user, pass);
 	       	 Statement st = con.createStatement();
-	       	 Items item1 = new Items();
+	       	 
+//	       	 Items item1 = new Items();
 	       	 
 	    	 String sql1= "Create table Items ("
 	    			 + " itemName text not null,"
@@ -305,11 +306,11 @@ private static void settingsMenu() {
 				main.items.add(newitem);
 				saveItems();
 				
-			
-				 
 				System.out.println("New Item Saved");
 			
-			
+				  String sql = "INSERT INTO Items (itemName,itemId,itemprice ,stock,quantity)"+
+			                 "VALUES ("+"'"+newitem.getItemName()+"','"+newitem.getItemId()+"','"+newitem.getItemprice()+"','"+newitem.getStock()+"','"+newitem.getQuantity()+ "')";
+					 st.execute(sql);
 				//delete item
 	        }else if(select == 2) {
 	        	
@@ -350,25 +351,24 @@ private static void settingsMenu() {
 	        			System.out.println("New Item Price Saved");
 	        			saveItems();
 	        		}
+	        		
 	        	}
-//	        	String sql = "INSERT INTO Items (itemName,itemId,itemprice ,stock,quantity)"+
-//		                 "VALUES ("+"'"item1.getItemName()+"','"+item1.getItemId()+"','"+item1.getItemprice()+"','"+item1.getStock()+"','"+item1.getQuantity()+ "')";
-//				 st.execute(sql);
-//	        
+	        
+	        	
 	        	//print all items
 	        }else if(select == 4) {
 	        	System.out.println("-------------------");
 	        	
 	        	for(Items item : main.items) {
-	        		System.out.format("ID:%d Name%s Price:%f Stock:%d \r\n",item.getItemId(), item.getItemName(), item.getItemprice(), item1.getStock());
+	        		System.out.format("ID:%d Name%s Price:%f Stock:%d \r\n",item.getItemId(), item.getItemName(), item.getItemprice(), item.getStock());
 	        	}
 	        	
 	        	System.out.println("-------------------");
 	        }else if(select == 5) {
 	        	main(null);
 	        }
-
-	    	 
+		
+	      
 			printMenu(3);
 			itemsMenu();
 			con.close();
