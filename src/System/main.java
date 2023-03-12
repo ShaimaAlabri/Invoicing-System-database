@@ -217,6 +217,7 @@ private static void settingsMenu() {
 		 
 		saveSettings();
 		System.out.println("New Shop Data Saved");
+		
 		 String sql = "INSERT INTO shop (shop_Name, phone_Number,faxNo ,email,website)"+
                  "VALUES ("+"'"+shope.getShopName()+"','"+shope.getPhoneNumber()+"','"+shope.getFaxNo()+"','"+shope.getEmail()+"','"+shope.getWebsite()+ "')";
 		 st.execute(sql);
@@ -269,12 +270,12 @@ private static void settingsMenu() {
 	    	 String sql1= "Create table Items ("
 	    			 + " itemName text not null,"
 	    			 + " itemId INTEGER PRIMARY KEY,"
-	    			 + " itemprice float not null,"
-	    			 + " stock INTEGER not null, "
-	    			 + " quantity INTEGER not null "
+	    			 + " itemprice float ,"
+	    			 + " stock INTEGER , "
+	    			 + " quantity INTEGER  "
 	    			 + ");";
 	    	// System.out.println("databas craeted");
-	    	//	st.execute(sql1);
+//	    		st.execute(sql1);
 	       	 
 	        
 	     // add new item
@@ -350,10 +351,10 @@ private static void settingsMenu() {
 	        			saveItems();
 	        		}
 	        	}
-	        	String sql = "INSERT INTO Items (itemName,itemId,itemprice ,stock,quantity)"+
-		                 "VALUES ("+"'"+item1.getItemName()+"','"+item1.getItemId()+"','"+item1.getItemprice()+"','"+item1.getStock()+"','"+item1.getQuantity()+ "')";
-				 st.execute(sql);
-	        
+//	        	String sql = "INSERT INTO Items (itemName,itemId,itemprice ,stock,quantity)"+
+//		                 "VALUES ("+"'"item1.getItemName()+"','"+item1.getItemId()+"','"+item1.getItemprice()+"','"+item1.getStock()+"','"+item1.getQuantity()+ "')";
+//				 st.execute(sql);
+//	        
 	        	//print all items
 	        }else if(select == 4) {
 	        	System.out.println("-------------------");
@@ -524,16 +525,16 @@ private static void settingsMenu() {
 		    			 + " invoiceNo INTEGER PRIMARY KEY,"
 		    			 + " invoiceDate Text not null,"
 		    			 + " CustomerName Text not null,"
-		    			 + " CustomerNumber INTEGER not null, "
-		    			 + " noOfItems INTEGER not null,"
-		    			 + "totalAmount float not null,"
-		    			 + "paidAmount float not null,"
-		    			 + "balance float not null,"
-		    			 +"PaymentPrice float not null,"
+		    			 + " CustomerNumber INTEGER , "
+		    			 + " noOfItems INTEGER ,"
+		    			 + "totalAmount float ,"
+		    			 + "paidAmount float ,"
+		    			 + "balance float ,"
+		    			 +"PaymentPrice float ,"
 		    			 + ");";
 		    	// System.out.println("databas craeted");
-		    		//st.execute(sql1);
-			
+//		    		st.execute(sql1);
+//			
 	        Scanner sc = new Scanner(System.in);
 	    	Invoice newInvoice = new Invoice();
 	    	
@@ -634,7 +635,7 @@ private static void settingsMenu() {
 			saveInvoices();
 			
 			String sql = "INSERT INTO Invoice (invoiceNo,invoiceDate,CustomerName ,CustomerNumber,noOfItems,totalAmount,paidAmount,balance,PaymentPrice)"+
-	                 "VALUES ("+"'"+invo.getInvoiceNo()+"','"+invo.getInvoiceDate()+"','"+invo.getCustomerName()+"','"+invo.getCustomerNumber()+"','"+invo.getNoOfItems()+"','"+invo.getTotalAmount()+"','"+invo.getPaidAmount()+"','"+invo.getBalance()+"','"+invo.getPaymentPrice()+"')";
+	                 "VALUES ("+"'"+newInvoice.getInvoiceNo()+"','"+newInvoice.getInvoiceDate()+"','"+newInvoice.getCustomerName()+"','"+newInvoice.getCustomerNumber()+"','"+newInvoice.getNoOfItems()+"','"+newInvoice.getTotalAmount()+"','"+newInvoice.getPaidAmount()+"','"+newInvoice.getBalance()+"','"+newInvoice.getPaymentPrice()+"')";
 			 st.execute(sql);
 			 
 			System.out.print("Invoice Saved Successfully");
