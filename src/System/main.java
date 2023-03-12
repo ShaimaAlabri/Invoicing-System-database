@@ -213,13 +213,13 @@ private static void settingsMenu() {
 		String Website = sc.next();
 		main.shope.setWebsite(Website);
 		
-		 String sql = "INSERT INTO shop (shop_Name, phone_Number,faxNo ,email,website)"+
-                 "VALUES ("+"'"+shope.getShopName()+"','"+shope.getPhoneNumber()+"','"+shope.getFaxNo()+"','"+shope.getEmail()+"','"+shope.getWebsite()+ "')";
-		 st.execute(sql);
+		
 		 
 		saveSettings();
 		System.out.println("New Shop Data Saved");
-
+		 String sql = "INSERT INTO shop (shop_Name, phone_Number,faxNo ,email,website)"+
+                 "VALUES ("+"'"+shope.getShopName()+"','"+shope.getPhoneNumber()+"','"+shope.getFaxNo()+"','"+shope.getEmail()+"','"+shope.getWebsite()+ "')";
+		 st.execute(sql);
 			
         }else if(select == 4) {
         	main(null);
@@ -265,6 +265,7 @@ private static void settingsMenu() {
 	       	 con = DriverManager.getConnection(url, user, pass);
 	       	 Statement st = con.createStatement();
 	       	 Items item1 = new Items();
+	       	 
 	    	 String sql1= "Create table Items ("
 	    			 + " itemName text not null,"
 	    			 + " itemId INTEGER PRIMARY KEY,"
@@ -298,10 +299,13 @@ private static void settingsMenu() {
 				int stockOfItems = sc.nextInt();
 				newitem.setStock(stockOfItems);
 				
+				
 				//add new item to the global items array
 				main.items.add(newitem);
 				saveItems();
 				
+			
+				 
 				System.out.println("New Item Saved");
 			
 			
@@ -328,9 +332,7 @@ private static void settingsMenu() {
 	        	}
 	        	
 	    
-	        	String sql = "INSERT INTO Items (itemName,itemId,itemprice ,stock,quantity)"+
-		                 "VALUES ("+"'"+item1.getItemName()+"','"+item1.getItemId()+"','"+item1.getItemprice()+"','"+item1.getStock()+"','"+item1.getQuantity()+ "')";
-				 st.execute(sql);
+	        	
 	        	//change item price
 	        }else if(select == 3) {
 	        	
@@ -348,6 +350,9 @@ private static void settingsMenu() {
 	        			saveItems();
 	        		}
 	        	}
+	        	String sql = "INSERT INTO Items (itemName,itemId,itemprice ,stock,quantity)"+
+		                 "VALUES ("+"'"+item1.getItemName()+"','"+item1.getItemId()+"','"+item1.getItemprice()+"','"+item1.getStock()+"','"+item1.getQuantity()+ "')";
+				 st.execute(sql);
 	        
 	        	//print all items
 	        }else if(select == 4) {
@@ -356,7 +361,7 @@ private static void settingsMenu() {
 	        	for(Items item : main.items) {
 	        		System.out.format("ID:%d Name%s Price:%f Stock:%d \r\n",item.getItemId(), item.getItemName(), item.getItemprice(), item1.getStock());
 	        	}
-
+	        	
 	        	System.out.println("-------------------");
 	        }else if(select == 5) {
 	        	main(null);
@@ -493,6 +498,41 @@ private static void settingsMenu() {
 		
 		// add new invoice
 		private static void addNewInvoice() {
+			 String url = "jdbc:sqlserver://localhost:1433;databaseName=Invo;encrypt=true;trustServerCertificate=true";
+
+		        Scanner scanner = new Scanner(System.in);
+		       	System.out.println("enter user");
+		       	 String user = scanner.nextLine();
+//		       	 System.out.println(user);
+		       	 System.out.println("enter pass");
+		       	 String pass = scanner.nextLine();
+//		       	 System.out.println(pass);
+
+		       	 if (user.equals(user) && pass.equals(pass)) {}else {
+		       	 System.out.println("worng username and password ");
+		       	 }
+		       	 Connection con = null;
+		       	 System.out.println("System is in prograss:");
+		       	 try {
+		       	 // create a new table
+		       	 Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+		       	 DriverManager.registerDriver(driver);
+		       	 con = DriverManager.getConnection(url, user, pass);
+		       	 Statement st = con.createStatement();
+		       	 Invoice invo= new  Invoice();
+		    	 String sql1= "Create table Invoice("
+		    			 + " invoiceNo INTEGER PRIMARY KEY,"
+		    			 + " invoiceDate Text not null,"
+		    			 + " CustomerName Text not null,"
+		    			 + " CustomerNumber INTEGER not null, "
+		    			 + " noOfItems INTEGER not null,"
+		    			 + "totalAmount float not null,"
+		    			 + "paidAmount float not null,"
+		    			 + "balance float not null,"
+		    			 +"PaymentPrice float not null,"
+		    			 + ");";
+		    	// System.out.println("databas craeted");
+		    		//st.execute(sql1);
 			
 	        Scanner sc = new Scanner(System.in);
 	    	Invoice newInvoice = new Invoice();
@@ -587,17 +627,24 @@ private static void settingsMenu() {
 			
 			System.out.format("you should return:%f to the customer\r\n",remaining);
 
-			
+		
 			//add new invoice to the list
 			main.invoices.add(newInvoice);
 			//save to file
 			saveInvoices();
 			
+			String sql = "INSERT INTO Invoice (invoiceNo,invoiceDate,CustomerName ,CustomerNumber,noOfItems,totalAmount,paidAmount,balance,PaymentPrice)"+
+	                 "VALUES ("+"'"+invo.getInvoiceNo()+"','"+invo.getInvoiceDate()+"','"+invo.getCustomerName()+"','"+invo.getCustomerNumber()+"','"+invo.getNoOfItems()+"','"+invo.getTotalAmount()+"','"+invo.getPaidAmount()+"','"+invo.getBalance()+"','"+invo.getPaymentPrice()+"')";
+			 st.execute(sql);
+			 
 			System.out.print("Invoice Saved Successfully");
 			//return to main menu
 			main(null);
+			con.close();
+		 		}catch (Exception e) {
+		 			System.err.println(e);
+		 		}
 		}
-
 
 		//Report: Statistics
 		private static void statistics() {
