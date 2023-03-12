@@ -306,7 +306,7 @@ private static void settingsMenu() {
 				
 				String sql = "INSERT INTO Items (itemName,itemId,itemprice ,stock)"+
 		                 "VALUES ("+"'"+newitem.getItemName()+"','"+newitem.getItemId()+"','"+newitem.getItemprice()+"','"+newitem.getStock()+ "')";
-				System.out.println(sql);
+//				System.out.println(sql);
 				 st.execute(sql);
 				System.out.println("New Item Saved");
 			
