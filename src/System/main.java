@@ -33,7 +33,6 @@ public class main {
 	public static ArrayList<Invoice> invoices = new ArrayList<Invoice>();
 	public static ArrayList <Items> items=new ArrayList<Items>();
 	public static Shop shope=new Shop();
-	
 public static void main(String[] args) {
 	
 //	String url = "jdbc:sqlserver://localhost:1433;databaseName=Invo;encrypt=true;trustServerCertificate=true";
@@ -266,17 +265,16 @@ private static void settingsMenu() {
 	       	 con = DriverManager.getConnection(url, user, pass);
 	       	 Statement st = con.createStatement();
 	       	 
-//	       	 Items item1 = new Items();
+//	       	 Items items = new Items();
 	       	 
 	    	 String sql1= "Create table Items ("
 	    			 + " itemName text not null,"
 	    			 + " itemId INTEGER PRIMARY KEY,"
 	    			 + " itemprice float ,"
 	    			 + " stock INTEGER , "
-	    			 + " quantity INTEGER  "
 	    			 + ");";
 	    	// System.out.println("databas craeted");
-//	    		st.execute(sql1);
+   		//st.execute(sql1);
 	       	 
 	        
 	     // add new item
@@ -306,11 +304,13 @@ private static void settingsMenu() {
 				main.items.add(newitem);
 				saveItems();
 				
+				String sql = "INSERT INTO Items (itemName,itemId,itemprice ,stock)"+
+		                 "VALUES ("+"'"+newitem.getItemName()+"','"+newitem.getItemId()+"','"+newitem.getItemprice()+"','"+newitem.getStock()+ "')";
+				System.out.println(sql);
+				 st.execute(sql);
 				System.out.println("New Item Saved");
 			
-				  String sql = "INSERT INTO Items (itemName,itemId,itemprice ,stock,quantity)"+
-			                 "VALUES ("+"'"+newitem.getItemName()+"','"+newitem.getItemId()+"','"+newitem.getItemprice()+"','"+newitem.getStock()+"','"+newitem.getQuantity()+ "')";
-					 st.execute(sql);
+				
 				//delete item
 	        }else if(select == 2) {
 	        	
@@ -333,7 +333,7 @@ private static void settingsMenu() {
 	        		System.out.println("Item not Found");
 	        	}
 	        	
-	    
+	        	
 	        	
 	        	//change item price
 	        }else if(select == 3) {
@@ -353,7 +353,7 @@ private static void settingsMenu() {
 	        		}
 	        		
 	        	}
-	        
+	        	
 	        	
 	        	//print all items
 	        }else if(select == 4) {
@@ -371,6 +371,7 @@ private static void settingsMenu() {
 	      
 			printMenu(3);
 			itemsMenu();
+			  
 			con.close();
 		}catch (Exception e) {
 			System.err.println(e);
