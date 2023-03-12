@@ -356,10 +356,10 @@ private static void settingsMenu() {
 	        	 System.out.println("Entert new product price: ");
 	        	 Double itemprice = sc.nextDouble();
 	        	 item.setItemprice(change);
-//	        	 String newValue = Double.toString(itemprice);
+	        	 String newValue = Double.toString(itemprice);
 	        	 
 	        	 String ch = "UPDATE Items SET itemprice = " + itemprice
-	        			 + " WHERE itemprice = " + change;
+	        			 + " WHERE itemId = " + change;
 	        			 int update1 = st.executeUpdate(ch);
 	        	 
 //	        	System.out.println("Enter item ID: ");
