@@ -6,11 +6,17 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import Invoicing.Shope;
 
 
 
@@ -30,8 +36,27 @@ public class main {
 	
 public static void main(String[] args) {
 	
-	
-	
+	String url = "jdbc:sqlserver://localhost:1433;databaseName=Invo;encrypt=true;trustServerCertificate=true";
+	 Scanner scanner = new Scanner(System.in);
+	System.out.println("enter user");
+	 String user = scanner.nextLine();
+	 System.out.println(user);
+	 System.out.println("enter pass");
+	 String pass = scanner.nextLine();
+	 System.out.println(pass);
+
+//	 if (user.equals(user) && pass.equals(pass)) {}else {
+//	 System.out.println("worng username and password ");
+//	 }
+//	 Connection con = null;
+//	 System.out.println("System is in prograss:");
+//	 try {
+//	 // create a new table
+//	 Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+//	 DriverManager.registerDriver(driver);
+//	 con = DriverManager.getConnection(url, user, pass);
+//	 Statement st = con.createStatement();
+//	
 	
 	option();
 	printMenu(1);
@@ -121,7 +146,38 @@ private static void printMenu(int menuNum) {
 private static void settingsMenu() {
     Scanner sc = new Scanner(System.in);
     int select = sc.nextInt();
-    
+	String url = "jdbc:sqlserver://localhost:1433;databaseName=Invo;encrypt=true;trustServerCertificate=true";
+
+    Scanner scanner = new Scanner(System.in);
+   	System.out.println("enter user");
+   	 String user = scanner.nextLine();
+   	 System.out.println(user);
+   	 System.out.println("enter pass");
+   	 String pass = scanner.nextLine();
+   	 System.out.println(pass);
+
+   	 if (user.equals(user) && pass.equals(pass)) {}else {
+   	 System.out.println("worng username and password ");
+   	 }
+   	 Connection con = null;
+   	 System.out.println("System is in prograss:");
+   	 try {
+   	 // create a new table
+   	 Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+   	 DriverManager.registerDriver(driver);
+   	 con = DriverManager.getConnection(url, user, pass);
+   	 Statement st = con.createStatement();
+    Shop shop=new Shop();
+	
+	 String sql1= "Create table shop ("
+			 + " shop_Name text not null,"
+			 + " phone_Number Integer not null ,"
+			 + " faxNo Integer not null,"
+			 + " email text not null, "
+			 + " website text not null "
+			 + ");";
+	 System.out.println("databas craeted");
+//		st.execute(sql1);
     // Load Data
     if(select == 1) {
     	//load settings from file
@@ -157,6 +213,10 @@ private static void settingsMenu() {
 		String Website = sc.next();
 		main.shope.setWebsite(Website);
 		
+		 String sql = "INSERT INTO shop (shop_Name, phone_Number,faxNo ,email,website)"+
+                 "VALUES ("+"'"+shope.getShopName()+"','"+shope.getPhoneNumber()+"','"+shope.getFaxNo()+"','"+shope.getEmail()+"','"+shope.getWebsite()+ "')";
+		 st.execute(sql);
+		 
 		saveSettings();
 		System.out.println("New Shop Data Saved");
 
@@ -164,12 +224,16 @@ private static void settingsMenu() {
         }else if(select == 4) {
         	main(null);
         }
-        
+
         // repete menu if get here
 		printMenu(2);
 		settingsMenu();
-          
-	}
+	
+		con.close();
+	}catch (Exception e) {
+		System.err.println(e);
+ }
+}
 
 	
 	//options for item menu
