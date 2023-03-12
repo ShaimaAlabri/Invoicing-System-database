@@ -36,14 +36,14 @@ public class main {
 	
 public static void main(String[] args) {
 	
-	String url = "jdbc:sqlserver://localhost:1433;databaseName=Invo;encrypt=true;trustServerCertificate=true";
-	 Scanner scanner = new Scanner(System.in);
-	System.out.println("enter user");
-	 String user = scanner.nextLine();
-	 System.out.println(user);
-	 System.out.println("enter pass");
-	 String pass = scanner.nextLine();
-	 System.out.println(pass);
+//	String url = "jdbc:sqlserver://localhost:1433;databaseName=Invo;encrypt=true;trustServerCertificate=true";
+//	 Scanner scanner = new Scanner(System.in);
+//	System.out.println("enter user");
+//	 String user = scanner.nextLine();
+//	 System.out.println(user);
+//	 System.out.println("enter pass");
+//	 String pass = scanner.nextLine();
+//	 System.out.println(pass);
 
 //	 if (user.equals(user) && pass.equals(pass)) {}else {
 //	 System.out.println("worng username and password ");
@@ -151,10 +151,10 @@ private static void settingsMenu() {
     Scanner scanner = new Scanner(System.in);
    	System.out.println("enter user");
    	 String user = scanner.nextLine();
-   	 System.out.println(user);
+//   	 System.out.println(user);
    	 System.out.println("enter pass");
    	 String pass = scanner.nextLine();
-   	 System.out.println(pass);
+//   	 System.out.println(pass);
 
    	 if (user.equals(user) && pass.equals(pass)) {}else {
    	 System.out.println("worng username and password ");
@@ -176,7 +176,7 @@ private static void settingsMenu() {
 			 + " email text not null, "
 			 + " website text not null "
 			 + ");";
-	 System.out.println("databas craeted");
+	// System.out.println("databas craeted");
 //		st.execute(sql1);
     // Load Data
     if(select == 1) {
@@ -243,6 +243,38 @@ private static void settingsMenu() {
 		private static void itemsMenu() {
 	        Scanner sc = new Scanner(System.in);
 	        int select = sc.nextInt();
+	        String url = "jdbc:sqlserver://localhost:1433;databaseName=Invo;encrypt=true;trustServerCertificate=true";
+
+	        Scanner scanner = new Scanner(System.in);
+	       	System.out.println("enter user");
+	       	 String user = scanner.nextLine();
+//	       	 System.out.println(user);
+	       	 System.out.println("enter pass");
+	       	 String pass = scanner.nextLine();
+//	       	 System.out.println(pass);
+
+	       	 if (user.equals(user) && pass.equals(pass)) {}else {
+	       	 System.out.println("worng username and password ");
+	       	 }
+	       	 Connection con = null;
+	       	 System.out.println("System is in prograss:");
+	       	 try {
+	       	 // create a new table
+	       	 Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+	       	 DriverManager.registerDriver(driver);
+	       	 con = DriverManager.getConnection(url, user, pass);
+	       	 Statement st = con.createStatement();
+	       	 Items item1 = new Items();
+	    	 String sql1= "Create table Items ("
+	    			 + " itemName text not null,"
+	    			 + " itemId INTEGER PRIMARY KEY,"
+	    			 + " itemprice float not null,"
+	    			 + " stock INTEGER not null, "
+	    			 + " quantity INTEGER not null "
+	    			 + ");";
+	    	// System.out.println("databas craeted");
+	    	//	st.execute(sql1);
+	       	 
 	        
 	     // add new item
 	        if(select == 1) {
@@ -269,9 +301,10 @@ private static void settingsMenu() {
 				//add new item to the global items array
 				main.items.add(newitem);
 				saveItems();
+				
 				System.out.println("New Item Saved");
-				
-				
+			
+			
 				//delete item
 	        }else if(select == 2) {
 	        	
@@ -293,7 +326,11 @@ private static void settingsMenu() {
 	        	}else {
 	        		System.out.println("Item not Found");
 	        	}
-
+	        	
+	    
+	        	String sql = "INSERT INTO Items (itemName,itemId,itemprice ,stock,quantity)"+
+		                 "VALUES ("+"'"+item1.getItemName()+"','"+item1.getItemId()+"','"+item1.getItemprice()+"','"+item1.getStock()+"','"+item1.getQuantity()+ "')";
+				 st.execute(sql);
 	        	//change item price
 	        }else if(select == 3) {
 	        	
@@ -311,22 +348,27 @@ private static void settingsMenu() {
 	        			saveItems();
 	        		}
 	        	}
-	        	
+	        
 	        	//print all items
 	        }else if(select == 4) {
 	        	System.out.println("-------------------");
 	        	
 	        	for(Items item : main.items) {
-	        		System.out.format("ID:%d Name%s Price:%f Stock:%d \r\n",item.getItemId(), item.getItemName(), item.getItemprice(), item.getStock());
+	        		System.out.format("ID:%d Name%s Price:%f Stock:%d \r\n",item.getItemId(), item.getItemName(), item.getItemprice(), item1.getStock());
 	        	}
 
 	        	System.out.println("-------------------");
 	        }else if(select == 5) {
 	        	main(null);
 	        }
-	        
+
+	    	 
 			printMenu(3);
 			itemsMenu();
+			con.close();
+		}catch (Exception e) {
+			System.err.println(e);
+		}
 		}
 		
 		//save settings to file
